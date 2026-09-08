@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Portré helye">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F2F1ED"/>
+      <stop offset="1" stop-color="#E7E5DF"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#g)"/>
+  <rect x="24.5" y="24.5" width="751" height="951" fill="none" stroke="#D5D2CA" stroke-width="1"/>
+  <g fill="#8A918E" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" text-anchor="middle">
+    <text x="400" y="486" font-size="26" letter-spacing="9">PORTRÉ</text>
+    <text x="400" y="524" font-size="17" letter-spacing="1.5">1600 × 2000 px · 4:5</text>
+  </g>
+  <line x1="340" y1="546" x2="460" y2="546" stroke="#B79A6E" stroke-width="1"/>
+</svg>

@@ -1,0 +1,506 @@
+/* ==========================================================================
+   SCIALLA — landing page
+   Design direction: „Halk jelenlét”
+   Egy szín · kártya helyett vonal · egyetlen sötét sáv
+   ========================================================================== */
+
+/* --- 1. Tokens ----------------------------------------------------------- */
+:root{
+  /* paletta */
+  --carta:#FAF9F7;
+  --nebbia:#EFEEEA;
+  --ink:#1F2A28;
+  --ink-hover:#2C3A37;
+  --pietra:#5C6461;
+  --filo:#DFDDD7;
+  --filo-strong:#CFCCC4;
+  --ottone:#7F6440;
+  --ottone-chiaro:#C4A574;
+  --carta-ink:#E8E9E5;
+
+  /* betűk */
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --sans:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+
+  /* rács */
+  --content:1200px;
+  --gutter:clamp(20px,5vw,64px);
+  --header-h:64px;
+
+  --ease:cubic-bezier(.22,.61,.36,1);
+  color-scheme:light;
+}
+
+/* --- 2. Reset ------------------------------------------------------------ */
+*,*::before,*::after{box-sizing:border-box}
+/* overflow-x:clip a html-en (nem hidden a body-n): így nem jön létre új
+   scroll-konténer, tehát a position:sticky elemek Safariban is működnek. */
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
+body{
+  margin:0;
+  background:var(--carta);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:1.0625rem;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+img{max-width:100%;display:block}
+h1,h2,h3{margin:0;font-family:var(--serif);font-weight:300;text-wrap:balance}
+p,ul,ol,dl,dd{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--ottone);outline-offset:3px;border-radius:2px}
+section[id]{scroll-margin-top:calc(var(--header-h) + 24px)}
+
+.skip-link{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  background:var(--ink);color:var(--carta);
+  padding:12px 20px;font-size:.9rem;text-decoration:none;
+}
+.skip-link:focus{left:0}
+
+/* --- 3. Layout ----------------------------------------------------------- */
+.container{
+  width:100%;
+  max-width:calc(var(--content) + var(--gutter) * 2);
+  margin-inline:auto;
+  padding-inline:var(--gutter);
+}
+.bleed{
+  display:grid;
+  grid-template-columns:
+    [full-start] minmax(var(--gutter),1fr)
+    [content-start] minmax(0,var(--content)) [content-end]
+    minmax(var(--gutter),1fr) [full-end];
+}
+.bleed > *{grid-column:content}
+.section{padding-block:clamp(80px,12vw,128px)}
+.section--nebbia{background:var(--nebbia)}
+.section--closing{padding-block:clamp(96px,15vw,160px)}
+.narrow{max-width:680px}
+
+/* --- 4. Tipográfia ------------------------------------------------------- */
+.eyebrow{
+  font-size:.75rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--ottone);margin-bottom:16px;
+}
+h2{font-size:clamp(1.75rem,4.4vw,2.75rem);line-height:1.14;letter-spacing:-.012em}
+h3{font-size:1.25rem;line-height:1.3;font-weight:400}
+.lead{
+  font-size:clamp(1.0625rem,1.6vw,1.25rem);line-height:1.6;
+  color:var(--pietra);max-width:34em;
+}
+.prose{display:grid;gap:18px;color:var(--pietra);max-width:36em}
+.section__head{margin-bottom:clamp(40px,6vw,64px)}
+.section__outro{margin-top:clamp(32px,5vw,48px);color:var(--pietra)}
+.legal-note{
+  margin-top:clamp(32px,5vw,48px);
+  font-size:.875rem;color:var(--pietra);max-width:46em;
+}
+.ph{
+  color:var(--ottone);
+  border-bottom:1px dashed rgba(127,100,64,.45);
+  padding-bottom:1px;
+}
+.link-arrow{
+  display:inline-block;padding-block:10px;
+  color:var(--ink);font-weight:500;
+  text-decoration:underline;text-decoration-color:var(--ottone);
+  text-underline-offset:5px;text-decoration-thickness:1px;
+  transition:color .18s var(--ease);
+}
+.link-arrow::after{content:" \2192"}
+.link-arrow:hover{color:var(--ottone)}
+
+/* --- 5. Gombok ----------------------------------------------------------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:56px;padding:0 32px;border-radius:2px;
+  font-family:var(--sans);font-size:.9375rem;font-weight:600;letter-spacing:.01em;
+  text-decoration:none;border:1px solid transparent;cursor:pointer;
+  white-space:nowrap;
+  transition:background-color .18s var(--ease),transform .18s var(--ease);
+}
+.btn--primary{background:var(--ink);color:var(--carta)}
+.btn--primary:hover{background:var(--ink-hover);transform:translateY(-1px)}
+.btn--primary:active{transform:translateY(0)}
+.btn--sm{min-height:44px;padding:0 20px;font-size:.875rem}
+.btn--lg{min-height:60px;padding:0 40px;font-size:1rem}
+.btn--block{display:flex;width:100%}
+.btn-note{margin-top:12px;font-size:.8125rem;line-height:1.5;color:var(--pietra)}
+
+/* --- 6. Header ----------------------------------------------------------- */
+.site-header{
+  position:sticky;top:0;z-index:50;
+  background:var(--carta);
+  transition:box-shadow .2s var(--ease);
+}
+.site-header.is-scrolled{box-shadow:inset 0 -1px 0 var(--filo)}
+.site-header__inner{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  min-height:var(--header-h);
+}
+.logotype{
+  display:inline-flex;align-items:center;min-height:44px;
+  font-family:var(--sans);font-size:.8125rem;font-weight:600;
+  letter-spacing:.26em;text-transform:uppercase;text-decoration:none;
+  color:var(--ink);white-space:nowrap;
+}
+.site-header__cta{flex:0 0 auto;padding:0 16px;font-size:.8125rem}
+.logotype--light{color:var(--carta-ink)}
+.site-nav{display:none}
+.site-nav a{
+  display:inline-flex;align-items:center;min-height:44px;
+  font-size:.9rem;color:var(--pietra);text-decoration:none;
+  transition:color .18s var(--ease);
+}
+.site-nav a:hover{color:var(--ink)}
+
+/* --- 7. Hero ------------------------------------------------------------- */
+.hero{padding-block:clamp(48px,9vw,112px) clamp(64px,10vw,128px)}
+.hero__inner{grid-column:content;display:grid;gap:clamp(40px,7vw,64px);align-items:center}
+.hero__title{
+  font-size:clamp(2.375rem,8.5vw,4.5rem);line-height:1.04;letter-spacing:-.02em;
+  margin-bottom:24px;max-width:14ch;
+}
+.hero__cta{margin-top:clamp(32px,5vw,40px)}
+.hero__media img{
+  width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
+  border-radius:2px;background:var(--nebbia);
+}
+.trust{
+  list-style:none;padding:20px 0 0;margin-top:clamp(32px,5vw,48px);
+  border-top:1px solid var(--filo);
+  display:grid;gap:8px;font-size:.875rem;color:var(--pietra);
+}
+
+/* --- 8. Problémák (sorindex) --------------------------------------------- */
+.topics{list-style:none;padding:0;border-top:1px solid var(--filo)}
+.topic{
+  position:relative;
+  padding:24px 0;
+  border-bottom:1px solid var(--filo);
+  transition:background-color .18s var(--ease);
+}
+.topic__name{margin-bottom:6px;font-size:1.3125rem}
+.topic__desc{color:var(--pietra);max-width:44em}
+.topic::before{
+  content:"";position:absolute;left:2px;top:34px;
+  width:0;height:1px;background:var(--ottone);
+  transition:width .18s var(--ease);
+}
+
+/* --- 9. Kinek szól ------------------------------------------------------- */
+.audience{display:grid;gap:clamp(32px,5vw,56px)}
+.audience__body{display:grid;gap:clamp(36px,5vw,48px)}
+.audience h2{max-width:12ch}
+.audience__not{padding-top:clamp(28px,4vw,36px);border-top:1px solid var(--filo-strong)}
+.audience__not-title{
+  font-family:var(--sans);font-size:.9375rem;font-weight:600;
+  margin-bottom:16px;color:var(--ink);
+}
+.marklist{list-style:none;padding:0;display:grid;gap:14px}
+.marklist li{position:relative;padding-left:26px}
+.marklist li::before{
+  content:"";position:absolute;left:0;top:.75em;
+  width:12px;height:1px;background:var(--ottone);
+}
+.marklist--muted li{color:var(--pietra)}
+.marklist--muted li::before{background:var(--filo-strong)}
+
+/* --- 10. Folyamat -------------------------------------------------------- */
+.process{
+  list-style:none;position:relative;
+  padding:0 0 0 28px;margin:0;
+  display:grid;gap:36px;
+}
+.process::before{
+  content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;
+  background:var(--filo);
+  transform:scaleY(0);transform-origin:top;
+  transition:transform .7s var(--ease);
+}
+.process.is-drawn::before{transform:scaleY(1)}
+.process__step{position:relative}
+.process__step::before{
+  content:"";position:absolute;left:-28px;top:.7em;
+  width:14px;height:1px;background:var(--ottone);
+}
+.process__num{
+  display:block;font-size:.75rem;font-weight:600;letter-spacing:.1em;
+  color:var(--ottone);font-variant-numeric:tabular-nums;margin-bottom:8px;
+}
+.process__title{font-size:1.25rem;margin-bottom:6px}
+.process__desc{color:var(--pietra);font-size:1rem}
+.process__meta{
+  margin-top:10px;font-size:.8125rem;color:var(--pietra);
+  font-variant-numeric:tabular-nums;
+}
+
+/* --- 11. Bemutatkozás ---------------------------------------------------- */
+.about{padding-block:clamp(80px,12vw,128px)}
+.about__inner{grid-column:content;display:grid;gap:clamp(40px,6vw,72px);align-items:start}
+.about__media img{
+  width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
+  border-radius:2px;background:var(--nebbia);
+}
+.about__name{
+  font-size:clamp(1.875rem,5vw,3rem);line-height:1.1;
+  letter-spacing:-.015em;margin-bottom:28px;
+}
+.credentials{margin-top:clamp(32px,4vw,40px);border-top:1px solid var(--filo)}
+.credentials__row{display:grid;gap:2px;padding:14px 0;border-bottom:1px solid var(--filo)}
+.credentials dt{
+  font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--pietra);
+}
+.credentials dd{font-size:1rem}
+.signature{
+  margin-top:clamp(28px,4vw,36px);
+  font-family:var(--serif);font-style:italic;font-weight:300;
+  font-size:1.25rem;line-height:1.4;color:var(--ink);
+}
+
+/* --- 12. Szemlélet (sötét sáv) ------------------------------------------- */
+.statement{
+  background:var(--ink);color:var(--carta-ink);
+  padding-block:clamp(88px,14vw,160px);
+}
+.statement__inner{display:grid;gap:clamp(32px,5vw,48px)}
+.statement__rule{display:block;width:40px;height:1px;background:var(--ottone-chiaro)}
+.statement__text{
+  font-family:var(--serif);font-weight:300;font-style:italic;
+  font-size:clamp(1.625rem,4.4vw,2.5rem);line-height:1.3;letter-spacing:-.01em;
+  max-width:30ch;color:var(--carta-ink);
+}
+.statement__support{
+  list-style:none;padding:0;display:grid;
+  border-top:1px solid rgba(232,233,229,.18);
+}
+.statement__support li{
+  display:grid;gap:4px;padding:18px 0;
+  border-bottom:1px solid rgba(232,233,229,.18);
+}
+.statement__support strong{font-size:.9375rem;font-weight:600}
+.statement__support span{font-size:.9375rem;color:rgba(232,233,229,.68)}
+
+/* --- 13. Mit / mit nem --------------------------------------------------- */
+.boundaries{display:grid;gap:clamp(36px,5vw,48px)}
+.boundaries__title{
+  font-family:var(--sans);font-size:.75rem;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink);
+  margin-bottom:20px;
+}
+.boundaries__col--muted .boundaries__title{color:var(--pietra)}
+.boundaries__divider{height:1px;background:var(--filo);align-self:stretch}
+
+/* --- 14. Első beszélgetés (az egyetlen panel) ---------------------------- */
+.panel{
+  background:var(--nebbia);border-radius:3px;
+  padding:clamp(28px,6vw,64px);
+  max-width:720px;margin-inline:auto;
+  display:grid;gap:20px;justify-items:start;
+}
+.panel__title{font-size:clamp(1.625rem,4vw,2.375rem);line-height:1.15;letter-spacing:-.012em}
+.panel__text{color:var(--pietra)}
+.panel__list{margin-block:4px}
+.panel__cta{margin-top:12px}
+
+/* --- 15. Foglalás -------------------------------------------------------- */
+.booking{display:grid;gap:clamp(32px,5vw,44px)}
+.booking__title{
+  font-size:clamp(2.125rem,7vw,4rem);line-height:1.06;letter-spacing:-.02em;
+  max-width:14ch;
+}
+.booking__alt{
+  padding-top:clamp(28px,4vw,36px);
+  border-top:1px solid var(--filo);color:var(--pietra);
+}
+.contact-list{list-style:none;padding:0;margin-top:4px;display:grid;gap:0}
+.contact-list a{
+  display:inline-block;padding-block:12px;color:var(--ink);
+  text-decoration:underline;text-decoration-color:var(--filo-strong);
+  text-underline-offset:5px;text-decoration-thickness:1px;
+  transition:text-decoration-color .15s var(--ease);
+}
+.contact-list a:hover{text-decoration-color:var(--ottone)}
+
+/* --- 16. Footer ---------------------------------------------------------- */
+.site-footer{
+  background:var(--ink);color:var(--carta-ink);
+  padding-block:clamp(56px,8vw,72px) 40px;
+}
+.site-footer__inner{display:grid;gap:36px}
+.site-footer__claim{
+  margin-top:14px;font-size:.9375rem;
+  color:rgba(232,233,229,.66);max-width:30em;
+}
+.site-footer__heading{
+  font-family:var(--sans);font-size:.72rem;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ottone-chiaro);
+  margin-bottom:14px;
+}
+.site-footer__col ul{list-style:none;padding:0;display:grid;gap:0}
+.site-footer a{
+  display:inline-block;padding-block:12px;
+  color:var(--carta-ink);font-size:.9375rem;
+  text-decoration:underline;text-decoration-color:transparent;
+  text-underline-offset:5px;text-decoration-thickness:1px;
+  transition:text-decoration-color .15s var(--ease);
+}
+.site-footer a:hover{text-decoration-color:var(--ottone-chiaro)}
+.site-footer .ph{color:var(--ottone-chiaro);border-bottom-color:rgba(196,165,116,.5)}
+.site-footer__bottom{
+  margin-top:clamp(40px,6vw,56px);padding-top:24px;
+  border-top:1px solid rgba(232,233,229,.16);
+  display:grid;gap:6px;
+  font-size:.8125rem;color:rgba(232,233,229,.6);
+}
+
+/* --- 17. Mobil sticky CTA ------------------------------------------------ */
+.mobile-cta{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;
+  background:var(--carta);
+  padding:12px var(--gutter);
+  padding-bottom:calc(12px + env(safe-area-inset-bottom));
+  box-shadow:0 -1px 0 var(--filo),0 -8px 24px rgba(31,42,40,.06);
+  transform:translateY(115%);
+  transition:transform .22s var(--ease);
+}
+.mobile-cta.is-visible{transform:none}
+
+/* --- 18. Reveal ---------------------------------------------------------- */
+.js .reveal{
+  opacity:0;transform:translateY(12px);
+  transition:opacity .5s var(--ease),transform .5s var(--ease);
+  transition-delay:var(--rd,0s);
+}
+.js .reveal.is-in{opacity:1;transform:none}
+.d1{--rd:.07s}
+.d2{--rd:.14s}
+.d3{--rd:.21s}
+.d4{--rd:.28s}
+
+/* ==========================================================================
+   19. Töréspontok
+   ========================================================================== */
+
+/* --- >=600px: nagyobb telefon -------------------------------------------- */
+@media (min-width:600px){
+  .logotype{font-size:.875rem;letter-spacing:.38em}
+  .site-header__cta{padding:0 20px;font-size:.875rem}
+  .credentials__row{grid-template-columns:150px 1fr;gap:24px;align-items:baseline}
+  .contact-list{grid-auto-flow:column;grid-auto-columns:max-content;gap:28px}
+}
+
+/* --- >=900px: tablet fekvő / desktop ------------------------------------- */
+@media (min-width:900px){
+  :root{--header-h:72px}
+
+  .btn{min-height:52px}
+  .btn--sm{min-height:44px}
+
+  /* hero: 7/5, a portré a viewport jobb széléig fut */
+  .hero__inner{
+    grid-column:content-start / full-end;
+    grid-template-columns:minmax(0,7fr) minmax(0,5fr);
+    gap:clamp(40px,5vw,80px);
+  }
+
+  /* bemutatkozás: tükrözve, a portré a bal széléig fut */
+  .about__inner{
+    grid-column:full-start / content-end;
+    grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+    gap:clamp(40px,5vw,80px);
+    align-items:center;
+  }
+
+  /* problémák: kétoszlopos sor + hover */
+  .topic{
+    display:grid;grid-template-columns:minmax(0,.42fr) minmax(0,.58fr);
+    gap:32px;align-items:baseline;
+    padding:32px 20px;margin-inline:-20px;
+  }
+  .topic__name{margin-bottom:0}
+  .topic::before{top:44px;left:4px}
+
+  /* kinek szól: sticky cím */
+  .audience{grid-template-columns:minmax(0,.42fr) minmax(0,.58fr);gap:64px;align-items:start}
+  .audience__head{position:sticky;top:calc(var(--header-h) + 40px)}
+
+  /* folyamat: vízszintes idővonal */
+  .process{grid-template-columns:repeat(4,1fr);gap:32px;padding:32px 0 0}
+  .process::before{
+    left:0;right:0;top:0;bottom:auto;width:auto;height:1px;
+    transform:scaleX(0);transform-origin:left;
+  }
+  .process.is-drawn::before{transform:scaleX(1)}
+  .process__step::before{left:0;top:-3px;width:5px;height:5px}
+
+  /* szemlélet: három alátámasztó oszlop */
+  .statement__support{grid-template-columns:repeat(3,1fr);gap:0 40px;border-top:0}
+  .statement__support li{
+    border-bottom:0;border-left:1px solid rgba(232,233,229,.2);
+    padding:0 0 0 28px;
+  }
+  .statement__support li:first-child{border-left:0;padding-left:0}
+
+  /* mit / mit nem: középen függőleges hajszálvonal */
+  .boundaries{grid-template-columns:1fr 1px 1fr;gap:0 56px}
+  .boundaries__divider{width:1px;height:auto}
+
+  /* footer */
+  .site-footer__inner{grid-template-columns:1.6fr 1fr 1fr;gap:48px}
+  .site-footer__bottom{grid-auto-flow:column;justify-content:space-between;gap:32px}
+
+  .mobile-cta{display:none}
+}
+
+/* --- >=1000px: teljes navigáció ------------------------------------------ */
+@media (min-width:1000px){
+  .site-nav{display:flex;gap:32px}
+}
+
+/* --- >=1200px: a bizalmi sáv egy sorba fér ------------------------------- */
+@media (min-width:1200px){
+  .trust{display:flex;flex-wrap:wrap;gap:0}
+  .trust li + li{margin-left:20px;padding-left:20px;border-left:1px solid var(--filo)}
+}
+
+/* --- Hover csak egérrel -------------------------------------------------- */
+@media (hover:hover) and (min-width:900px){
+  .topic:hover{background:var(--nebbia)}
+  .topic:hover::before{width:12px}
+}
+
+/* --- 20. Jogi aloldalak -------------------------------------------------- */
+.legal{padding-block:clamp(56px,9vw,96px)}
+.legal__title{
+  font-size:clamp(1.875rem,5vw,3rem);line-height:1.1;
+  letter-spacing:-.015em;margin-bottom:12px;
+}
+.legal__meta{color:var(--pietra);font-size:.875rem}
+.legal__body{max-width:680px;display:grid;gap:32px;margin-top:clamp(36px,5vw,56px)}
+.legal__body h2{font-size:1.1875rem;line-height:1.3;margin-bottom:10px}
+.legal__body p{color:var(--pietra)}
+.legal__body ul{padding-left:22px;color:var(--pietra);display:grid;gap:8px}
+.back-link{
+  display:inline-block;margin-top:clamp(32px,5vw,48px);padding-block:10px;
+  font-size:.9375rem;color:var(--ink);
+  text-decoration:underline;text-decoration-color:var(--ottone);
+  text-underline-offset:5px;text-decoration-thickness:1px;
+}
+.back-link:hover{color:var(--ottone)}
+
+/* --- 21. Csökkentett mozgás (mindig a fájl végén) ------------------------ */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  .js .reveal{opacity:1;transform:none}
+  .process::before{transform:none !important}
+  .btn--primary:hover{transform:none}
+}
