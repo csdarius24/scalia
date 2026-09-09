@@ -84,6 +84,34 @@
   window.addEventListener("resize", requestScroll, { passive: true });
   onScroll();
 
+  /* --- 4b. Aktív menüpont jelölése -------------------------------------- */
+  var navLinks = document.querySelectorAll(".site-nav a[href^='#']");
+  if (navLinks.length && "IntersectionObserver" in window) {
+    var linkFor = {};
+    var watched = [];
+
+    for (var k = 0; k < navLinks.length; k++) {
+      var id = navLinks[k].getAttribute("href").slice(1);
+      var section = document.getElementById(id);
+      if (!section) continue;
+      linkFor[id] = navLinks[k];
+      watched.push(section);
+    }
+
+    var spy = new IntersectionObserver(
+      function (entries) {
+        for (var i = 0; i < entries.length; i++) {
+          var link = linkFor[entries[i].target.id];
+          if (link) link.classList.toggle("is-current", entries[i].isIntersecting);
+        }
+      },
+      // Csak az a szekció számít aktívnak, amelyik a képernyő közepén jár.
+      { threshold: 0, rootMargin: "-45% 0px -50% 0px" }
+    );
+
+    for (var m = 0; m < watched.length; m++) spy.observe(watched[m]);
+  }
+
   /* --- 5. Copyright évszám ---------------------------------------------- */
   var yearEl = document.getElementById("ev");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());

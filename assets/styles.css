@@ -47,6 +47,7 @@ body{
   -moz-osx-font-smoothing:grayscale;
 }
 img{max-width:100%;display:block}
+figure{margin:0}
 h1,h2,h3{margin:0;font-family:var(--serif);font-weight:300;text-wrap:balance}
 p,ul,ol,dl,dd{margin:0}
 a{color:inherit}
@@ -98,6 +99,15 @@ h3{font-size:1.25rem;line-height:1.3;font-weight:400}
   margin-top:clamp(32px,5vw,48px);
   font-size:.875rem;color:var(--pietra);max-width:46em;
 }
+.legal-note strong{color:var(--ink);font-weight:600}
+
+/* Fotó-egységesítés: a stock és a saját képek is egy tónusba kerülnek. */
+.photo{position:relative;background:var(--nebbia);border-radius:2px;overflow:hidden}
+.photo::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(190deg,rgba(31,42,40,0) 55%,rgba(31,42,40,.12));
+}
+.photo img{filter:saturate(.92) contrast(1.03)}
 .ph{
   color:var(--ottone);
   border-bottom:1px dashed rgba(127,100,64,.45);
@@ -151,11 +161,19 @@ h3{font-size:1.25rem;line-height:1.3;font-weight:400}
 .logotype--light{color:var(--carta-ink)}
 .site-nav{display:none}
 .site-nav a{
+  position:relative;
   display:inline-flex;align-items:center;min-height:44px;
   font-size:.9rem;color:var(--pietra);text-decoration:none;
   transition:color .18s var(--ease);
 }
-.site-nav a:hover{color:var(--ink)}
+.site-nav a::after{
+  content:"";position:absolute;left:0;right:0;bottom:9px;height:1px;
+  background:var(--ottone);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .22s var(--ease);
+}
+.site-nav a:hover,.site-nav a.is-current{color:var(--ink)}
+.site-nav a:hover::after,.site-nav a.is-current::after{transform:scaleX(1)}
 
 /* --- 7. Hero ------------------------------------------------------------- */
 .hero{padding-block:clamp(48px,9vw,112px) clamp(64px,10vw,128px)}
@@ -260,6 +278,59 @@ h3{font-size:1.25rem;line-height:1.3;font-weight:400}
   font-family:var(--serif);font-style:italic;font-weight:300;
   font-size:1.25rem;line-height:1.4;color:var(--ink);
 }
+
+/* --- 11b. Teljes szélességű képsáv --------------------------------------- */
+.band{background:var(--carta);padding-bottom:clamp(48px,7vw,72px)}
+.band__img{
+  width:100%;height:auto;display:block;
+  aspect-ratio:3/2;object-fit:cover;
+  background:var(--nebbia);
+  filter:saturate(.92) contrast(1.03);
+}
+.band__caption{padding-top:18px;font-size:.875rem;color:var(--pietra)}
+
+/* --- 11c. Vélemények ----------------------------------------------------- */
+.quotes{list-style:none;padding:0;display:grid;border-top:1px solid var(--filo)}
+.quote{padding:clamp(28px,4vw,40px) 0;border-bottom:1px solid var(--filo)}
+.quote blockquote{
+  margin:0;
+  font-family:var(--serif);font-weight:300;font-style:italic;
+  font-size:clamp(1.1875rem,2.2vw,1.4375rem);line-height:1.44;
+  color:var(--ink);max-width:46ch;
+}
+.quote--lead blockquote{
+  font-size:clamp(1.4375rem,3.2vw,2rem);line-height:1.34;
+  letter-spacing:-.008em;max-width:36ch;
+}
+.quote__by{
+  margin-top:16px;font-size:.72rem;font-weight:600;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--pietra);
+}
+
+/* --- 11d. GYIK ----------------------------------------------------------- */
+.faq{display:grid;gap:clamp(32px,5vw,48px)}
+.faq h2{max-width:12ch}
+.faq__list{border-top:1px solid var(--filo-strong)}
+.faq__item{border-bottom:1px solid var(--filo-strong)}
+.faq__item summary{
+  list-style:none;cursor:pointer;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:24px;
+  padding:16px 0;min-height:44px;
+  font-family:var(--serif);font-weight:400;font-size:1.125rem;line-height:1.35;
+  color:var(--ink);
+  transition:color .18s var(--ease);
+}
+.faq__item summary::-webkit-details-marker{display:none}
+.faq__item summary::after{
+  content:"+";flex:0 0 auto;
+  font-family:var(--sans);font-size:1.25rem;font-weight:400;line-height:1.25;
+  color:var(--ottone);
+  transition:transform .2s var(--ease);
+}
+.faq__item[open] summary::after{transform:rotate(45deg)}
+.faq__item summary:hover{color:var(--ottone)}
+.faq__a{padding-bottom:20px;max-width:60ch}
+.faq__a p{color:var(--pietra);font-size:1rem}
 
 /* --- 12. Szemlélet (sötét sáv) ------------------------------------------- */
 .statement{
@@ -427,6 +498,19 @@ h3{font-size:1.25rem;line-height:1.3;font-weight:400}
   /* kinek szól: sticky cím */
   .audience{grid-template-columns:minmax(0,.42fr) minmax(0,.58fr);gap:64px;align-items:start}
   .audience__head{position:sticky;top:calc(var(--header-h) + 40px)}
+
+  /* képsáv: panorámaformátum */
+  .band__img{aspect-ratio:21/9}
+
+  /* vélemények: a vezető idézet teljes szélességben, alatta kettő egymás mellett */
+  .quotes{grid-template-columns:1fr 1fr;column-gap:56px}
+  .quote--lead{grid-column:1 / -1}
+  .quote:not(.quote--lead){border-bottom:0;padding-bottom:0}
+
+  /* GYIK: sticky cím + lista */
+  .faq{grid-template-columns:minmax(0,.36fr) minmax(0,.64fr);gap:64px;align-items:start}
+  .faq__head{position:sticky;top:calc(var(--header-h) + 40px)}
+  .faq__item summary{font-size:1.25rem;padding:20px 0}
 
   /* folyamat: vízszintes idővonal */
   .process{grid-template-columns:repeat(4,1fr);gap:32px;padding:32px 0 0}

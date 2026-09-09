@@ -13,12 +13,15 @@
 <meta property="og:site_name" content="SCIALLA">
 <meta property="og:title" content="SCIALLA — Life, családi és kapcsolati coaching">
 <meta property="og:description" content="Négyszemközti, ítélkezésmentes coaching, a te tempódban. Az első beszélgetés díjmentes.">
+<meta property="og:image" content="https://images.unsplash.com/photo-1745434159123-4908d0b9df94?auto=format&amp;fit=crop&amp;crop=faces&amp;w=1200&amp;h=630&amp;q=80">
+<meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..400&family=Schibsted+Grotesk:wght@400..600&display=swap">
-<link rel="stylesheet" href="assets/styles.css">
+<link rel="stylesheet" href="assets/styles.css?v=2">
 <script>document.documentElement.className += " js";</script>
 </head>
 
@@ -34,7 +37,7 @@
       <a href="#segitseg">Miben segítek</a>
       <a href="#folyamat">Hogyan dolgozunk</a>
       <a href="#rolam">Rólam</a>
-      <a href="#beszelgetes">Első beszélgetés</a>
+      <a href="#gyik">Gyakori kérdések</a>
     </nav>
 
     <a class="btn btn--primary btn--sm site-header__cta" href="#foglalas">Időpontot foglalok</a>
@@ -67,13 +70,16 @@
         </ul>
       </div>
 
-      <div class="hero__media reveal d2">
-        <!-- CSERE: a placeholder helyére a valódi portré (1600×2000 px, WebP/AVIF) -->
-        <img src="assets/img/portre-hero.svg"
+      <!-- CSERE: a stock fotó helyére a valódi portré (1600×2000 px, WebP/AVIF) -->
+      <figure class="hero__media photo reveal d2">
+        <img src="https://images.unsplash.com/photo-1745434159123-4908d0b9df94?auto=format&amp;fit=crop&amp;crop=faces&amp;w=900&amp;h=1125&amp;q=80"
+             srcset="https://images.unsplash.com/photo-1745434159123-4908d0b9df94?auto=format&amp;fit=crop&amp;crop=faces&amp;w=700&amp;h=875&amp;q=80 700w,
+                     https://images.unsplash.com/photo-1745434159123-4908d0b9df94?auto=format&amp;fit=crop&amp;crop=faces&amp;w=1100&amp;h=1375&amp;q=80 1100w"
+             sizes="(min-width: 900px) 42vw, 100vw"
              alt="Portré a SCIALLA coachról"
-             width="800" height="1000"
+             width="900" height="1125"
              fetchpriority="high" decoding="async">
-      </div>
+      </figure>
 
     </div>
   </section>
@@ -184,16 +190,36 @@
     </div>
   </section>
 
-  <!-- ========================================================== 05 BEMUTATKOZÁS -->
+  <!-- ========================================================== 05 KÉPSÁV -->
+  <figure class="band reveal">
+    <!-- CSERE: a stock fotó helyére valódi kép a saját teredről -->
+    <picture>
+      <source media="(min-width: 900px)"
+              srcset="https://images.unsplash.com/photo-1679215805585-bd03a616d807?auto=format&amp;fit=crop&amp;w=2000&amp;h=857&amp;q=80">
+      <img class="band__img"
+           src="https://images.unsplash.com/photo-1679215805585-bd03a616d807?auto=format&amp;fit=crop&amp;w=1000&amp;h=667&amp;q=80"
+           alt="Két ember beszélget egy világos, nyugodt nappaliban"
+           width="1000" height="667" loading="lazy" decoding="async">
+    </picture>
+    <figcaption class="band__caption container">
+      Egy nyugodt, zavartalan tér, ahol nem kell teljesítened semmit.
+      Személyesen <span class="ph">[ helyszín ]</span>, vagy online, otthonról.
+    </figcaption>
+  </figure>
+
+  <!-- ========================================================== 06 BEMUTATKOZÁS -->
   <section class="about bleed" id="rolam" aria-labelledby="rolam-cim">
     <div class="about__inner">
 
-      <div class="about__media reveal">
-        <!-- CSERE: a placeholder helyére a valódi portré (1600×2000 px, WebP/AVIF) -->
-        <img src="assets/img/portre-rolam.svg"
-             alt="Portré a SCIALLA coachról munka közben"
-             width="800" height="1000" loading="lazy" decoding="async">
-      </div>
+      <!-- CSERE: a stock fotó helyére a valódi második portré -->
+      <figure class="about__media photo reveal">
+        <img src="https://images.unsplash.com/photo-1728931710079-5fff6ae56b89?auto=format&amp;fit=crop&amp;w=900&amp;h=1125&amp;q=80"
+             srcset="https://images.unsplash.com/photo-1728931710079-5fff6ae56b89?auto=format&amp;fit=crop&amp;w=700&amp;h=875&amp;q=80 700w,
+                     https://images.unsplash.com/photo-1728931710079-5fff6ae56b89?auto=format&amp;fit=crop&amp;w=1100&amp;h=1375&amp;q=80 1100w"
+             sizes="(min-width: 900px) 38vw, 100vw"
+             alt="Teáscsésze és jegyzetfüzet egy csendes reggelen"
+             width="900" height="1125" loading="lazy" decoding="async">
+      </figure>
 
       <div class="about__text">
         <p class="eyebrow reveal">A SCIALLA mögött</p>
@@ -231,7 +257,7 @@
     </div>
   </section>
 
-  <!-- ========================================================== 06 SZEMLÉLET -->
+  <!-- ========================================================== 07 SZEMLÉLET -->
   <section class="statement" aria-labelledby="szemlelet-cim">
     <div class="container statement__inner">
       <span class="statement__rule reveal" aria-hidden="true"></span>
@@ -248,7 +274,47 @@
     </div>
   </section>
 
-  <!-- ========================================================== 07 MIT / MIT NEM -->
+  <!-- ========================================================== 08 VÉLEMÉNYEK -->
+  <section class="section" id="velemenyek" aria-labelledby="velemenyek-cim">
+    <div class="container">
+      <div class="section__head narrow">
+        <p class="eyebrow reveal">Vélemények</p>
+        <h2 id="velemenyek-cim" class="reveal">Amit utána mondtak.</h2>
+      </div>
+
+      <ul class="quotes">
+        <li class="quote quote--lead reveal">
+          <blockquote>
+            Azzal jöttem, hogy váltanom kellene. A harmadik alkalom után jöttem rá,
+            hogy nem a munkámmal van bajom, hanem azzal, hogy évek óta nem mondtam nemet senkinek.
+          </blockquote>
+          <p class="quote__by"><span class="ph">[ Keresztnév ]</span> · <span class="ph">[ 38, marketing ]</span></p>
+        </li>
+        <li class="quote reveal d1">
+          <blockquote>
+            Féltem, hogy meg fognak mondani, mit csináljak. Ehelyett olyan kérdéseket
+            kaptam, amiket magamnak sosem tettem volna fel.
+          </blockquote>
+          <p class="quote__by"><span class="ph">[ Keresztnév ]</span> · <span class="ph">[ 45, két gyerek ]</span></p>
+        </li>
+        <li class="quote reveal d2">
+          <blockquote>
+            Nyolc alkalom volt összesen. Azóta is használom azt a néhány dolgot,
+            amit ott raktunk össze.
+          </blockquote>
+          <p class="quote__by"><span class="ph">[ Keresztnév ]</span> · <span class="ph">[ 29, pedagógus ]</span></p>
+        </li>
+      </ul>
+
+      <p class="legal-note reveal">
+        <strong>Tervezet:</strong> a fenti szövegek minták, a szerkezet és a hosszúság bemutatására.
+        Élesítés előtt valódi, írásban elkért ügyfélvéleményekre cserélendők — kitalált
+        véleményt közzétenni jogszabályba ütközik.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========================================================== 09 MIT / MIT NEM -->
   <section class="section" id="hatarok" aria-labelledby="hatarok-cim">
     <div class="container">
       <div class="section__head narrow">
@@ -290,7 +356,75 @@
     </div>
   </section>
 
-  <!-- ========================================================== 08 ELSŐ BESZÉLGETÉS -->
+  <!-- ========================================================== 10 GYIK -->
+  <section class="section section--nebbia" id="gyik" aria-labelledby="gyik-cim">
+    <div class="container faq">
+      <div class="faq__head">
+        <p class="eyebrow reveal">Gyakori kérdések</p>
+        <h2 id="gyik-cim" class="reveal">Mielőtt<br>írnál.</h2>
+      </div>
+
+      <div class="faq__list reveal">
+        <details class="faq__item">
+          <summary>Mennyibe kerül egy alkalom?</summary>
+          <div class="faq__a">
+            <p>Egy 60 perces alkalom díja <span class="ph">[ összeg ]</span> Ft. Az első,
+              30 perces ismerkedő beszélgetés díjmentes, és nem kötelez semmire.
+              Több alkalomra előre nem kell fizetned.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Mi a különbség a coaching és a pszichoterápia között?</summary>
+          <div class="faq__a">
+            <p>A terápia jellemzően a múltból hozott sérülésekkel dolgozik, és gyógyító
+              szándékú egészségügyi ellátás. A coaching a jelenből indul, és arra keres
+              utat, hogyan juss el oda, ahova szeretnél. Nem diagnosztizálok és nem kezelek.
+              Ha az derül ki, hogy terápiára van szükséged, ezt az első beszélgetésen
+              megmondom, és ha tudok, ajánlok valakit.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Hány alkalomra lesz szükség?</summary>
+          <div class="faq__a">
+            <p>Jellemzően 4–8 alkalom, két hetente. Ez nem kötelező csomag: minden alkalom
+              után te döntöd el, folytatjuk-e. Van, akinek három beszélgetés is elég ahhoz,
+              hogy kimozduljon a holtpontról.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Online is ugyanúgy működik?</summary>
+          <div class="faq__a">
+            <p>Igen. Az ügyfeleim jelentős része végig online dolgozik velem, és a tapasztalat
+              az, hogy a saját, ismerős környezetben sokan hamarabb megnyílnak. Videóhívásban
+              beszélünk, nincs szükség semmilyen külön alkalmazásra.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Mi történik, ha kiderül, hogy nem nekem való?</summary>
+          <div class="faq__a">
+            <p>Pontosan ezért díjmentes az első beszélgetés. Ha úgy látom, hogy nem tudok
+              segíteni, vagy nincs meg köztünk a személyes összhang, megmondom. Ez nem kudarc —
+              ez a felelős válasz.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary>Amit elmondok, tényleg köztünk marad?</summary>
+          <div class="faq__a">
+            <p>Igen. Az elhangzottakat harmadik félnek nem adom át, kivéve, ha erre jogszabály
+              kötelez. Jegyzeteket csak a saját munkámhoz készítek, és ezeket nem osztom meg
+              senkivel.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================== 11 ELSŐ BESZÉLGETÉS -->
   <section class="section" id="beszelgetes" aria-labelledby="beszelgetes-cim">
     <div class="container">
       <div class="panel reveal">
@@ -320,7 +454,7 @@
     </div>
   </section>
 
-  <!-- ========================================================== 09 FOGLALÁS -->
+  <!-- ========================================================== 12 FOGLALÁS -->
   <section class="section section--closing" id="foglalas" aria-labelledby="foglalas-cim">
     <div class="container booking">
       <h2 id="foglalas-cim" class="booking__title reveal">Kezdjük egy beszélgetéssel.</h2>
@@ -389,6 +523,6 @@
   <a class="btn btn--primary btn--block" href="#foglalas">Időpontot foglalok</a>
 </div>
 
-<script src="assets/script.js" defer></script>
+<script src="assets/script.js?v=2" defer></script>
 </body>
 </html>
