@@ -16,7 +16,7 @@ vercel.json           biztonsági fejlécek + cache
 .gitignore            mi NEM kerül fel a GitHubra
 assets/
   styles.css          teljes design rendszer, CSS custom property tokenekkel
-  script.js           scroll-reveal, sticky header, mobil CTA sáv, aktív menüpont
+  script.js           scroll-reveal, sticky header, mobil menü és CTA sáv, aktív menüpont, Cal.com
   img/favicon.svg
 _ajanlat/             árajánlat — se a GitHubra, se a deployra nem kerül fel
 ```
@@ -52,9 +52,9 @@ Kézi deployhoz: `npx vercel --prod`
 | 01 | Hero | aszimmetrikus split, portré jobbra kifutva |
 | 02 | Miben segítek | hajszálvonalas sorindex |
 | 03 | Kinek szól | Nebbia sáv, sticky cím + kétszintű lista |
-| 04 | Hogyan dolgozunk | négylépéses idővonal |
-| 05 | Képsáv | teljes szélességű fotó, 21:9 |
-| 06 | Rólam | tükrözött split, kép balra kifutva |
+| 04 | Rólam | tükrözött split, kép balra kifutva |
+| 05 | Hogyan dolgozunk | négylépéses idővonal |
+| 06 | Képsáv | teljes szélességű fotó, 21:9 |
 | 07 | Szemlélet | teljes szélességű sötét sáv, egy mondat |
 | 08 | Vélemények | tipográfiai idézetek, kártya nélkül |
 | 09 | Mit / mit nem | kétoszlopos szedés |
@@ -105,7 +105,7 @@ A cserélendő helyeket az oldalon **szaggatottan aláhúzott, sárgaréz szín�
 | Óradíj | `index.html` — GYIK első kérdése |
 | Helyszín | `index.html` — a képsáv képaláírása |
 | E-mail, telefon, Facebook URL | `index.html`, jogi oldalak |
-| Foglalórendszer linkje | `index.html` — `#foglalas`, `<!-- CSERE -->` komment |
+| Cal.com esemény útvonala | `index.html` — `#calEmbed` `data-cal-link` attribútuma (lásd lent) |
 | Adatvédelmi és impresszum szövegek | `adatvedelem.html`, `impresszum.html` |
 | OG-kép | `index.html` `<head>` — most Unsplash-linkre mutat |
 | `noindex` meta törlése | mindhárom HTML `<head>` |
@@ -114,8 +114,8 @@ A cserélendő helyeket az oldalon **szaggatottan aláhúzott, sárgaréz szín�
 > közzétenni fogyasztóvédelmi jogszabályba ütközik. A szekcióban erre
 > figyelmeztető szöveg is van — azt is töröld, amikor bekerülnek a valódiak.
 
-> Az asset-hivatkozásokon `?v=2` verziószám van. **Minden CSS/JS módosítás után
-> növeld meg** (`?v=3`), különben a visszatérő látogató egy órán át a régi
+> Az asset-hivatkozásokon `?v=3` verziószám van. **Minden CSS/JS módosítás után
+> növeld meg** (`?v=4`), különben a visszatérő látogató egy órán át a régi
 > fájlt kapja a Vercel cache-éből.
 
 ---
@@ -133,8 +133,8 @@ A cserélendő helyeket az oldalon **szaggatottan aláhúzott, sárgaréz szín�
 | `--ottone-chiaro` | `#C4A574` | akcent sötét alapon |
 
 Betűk: **Newsreader** (címek, 200–400 súly) + **Schibsted Grotesk** (szöveg, UI).
-Töréspontok: 600 / 900 / 1000 / 1200 px. Mobilon nincs hamburgermenü, helyette
-alsó sticky CTA sáv jelenik meg a hero elhagyása után.
+Töréspontok: 600 / 900 / 1000 / 1200 px. 1000 px alatt a fejlécben „Menü” gomb nyit egy
+teljes képernyős menüt (csak JS-sel), és alsó sticky CTA sáv jelenik meg a hero elhagyása után.
 
 ---
 
@@ -159,3 +159,20 @@ Böngészőben, futó szerveren mérve — nem csak elméletben:
 
 > A `.claude/launch.json` csak helyi előnézethez kell; se a GitHubra, se a
 > deployra nem kerül fel.
+
+---
+
+## Időpontfoglalás (Cal.com)
+
+A `#foglalas` szekcióban beágyazott Cal.com naptár van, de **csak akkor jelenik meg,
+ha az `index.html`-ben a `#calEmbed` elem `data-cal-link` attribútuma ki van töltve**
+(pl. `data-cal-link="scialla/ismerkedes"`, vagyis a `cal.com/` utáni rész).
+
+- Üres értéknél nincs naptár; ilyenkor a `mailto:` gomb a foglalás módja.
+- A Cal.com szkript csak akkor töltődik be, amikor a látogató a foglalás közelébe görget.
+- Ha a szkript nem tölt be, vagy 12 másodperc alatt nem jelenik meg a naptár, az oldal
+  automatikusan visszaáll az e-mailes gombra.
+- Élő naptár mellett az e-mailes gomb másodlagos, körvonalas gomb lesz.
+- **Az adatvédelmi tájékoztatóba be kell írni a Cal.com-ot** mint adatfeldolgozót.
+
+Helyi előnézet Python nélkül: `powershell -File .claude/serve.ps1` → `http://localhost:4321`

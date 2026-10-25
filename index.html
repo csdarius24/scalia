@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..400&family=Schibsted+Grotesk:wght@400..600&display=swap">
-<link rel="stylesheet" href="assets/styles.css?v=2">
+<link rel="stylesheet" href="assets/styles.css?v=3">
 <script>document.documentElement.className += " js";</script>
 </head>
 
@@ -35,14 +35,41 @@
 
     <nav class="site-nav" aria-label="Fő navigáció">
       <a href="#segitseg">Miben segítek</a>
-      <a href="#folyamat">Hogyan dolgozunk</a>
       <a href="#rolam">Rólam</a>
+      <a href="#folyamat">Hogyan dolgozunk</a>
       <a href="#gyik">Gyakori kérdések</a>
     </nav>
 
-    <a class="btn btn--primary btn--sm site-header__cta" href="#foglalas">Időpontot foglalok</a>
+    <div class="site-header__actions">
+      <a class="btn btn--primary btn--sm site-header__cta" href="#foglalas">Időpont<span class="hide-xs">ot foglalok</span></a>
+      <button class="menu-toggle" id="menuToggle" type="button"
+              aria-expanded="false" aria-controls="mobileNav">
+        <span class="menu-toggle__icon" aria-hidden="true"></span>
+        <span class="menu-toggle__label">Menü</span>
+      </button>
+    </div>
   </div>
 </header>
+
+<!-- ============================================================ MOBIL MENÜ -->
+<!-- Csak JS-sel jelenik meg (a gomb is); JS nélkül a horgonylinkek és a CTA-k elegendők. -->
+<div class="mobile-nav" id="mobileNav" hidden>
+  <nav class="container mobile-nav__inner" aria-label="Mobil navigáció">
+    <ol class="mobile-nav__list">
+      <li><a href="#segitseg"><span>01</span>Miben segítek</a></li>
+      <li><a href="#rolam"><span>02</span>Rólam</a></li>
+      <li><a href="#folyamat"><span>03</span>Hogyan dolgozunk</a></li>
+      <li><a href="#velemenyek"><span>04</span>Vélemények</a></li>
+      <li><a href="#gyik"><span>05</span>Gyakori kérdések</a></li>
+    </ol>
+
+    <div class="mobile-nav__foot">
+      <a class="btn btn--primary btn--block" href="#foglalas">Időpontot foglalok</a>
+      <p class="btn-note">30 perc · online · díjmentes · nem kötelez semmire</p>
+      <a class="mobile-nav__mail" href="mailto:hello@scialla.hu">hello@scialla.hu</a>
+    </div>
+  </nav>
+</div>
 
 <main id="fo">
 
@@ -149,65 +176,7 @@
     </div>
   </section>
 
-  <!-- ========================================================== 04 FOLYAMAT -->
-  <section class="section" id="folyamat" aria-labelledby="folyamat-cim">
-    <div class="container">
-      <div class="section__head narrow">
-        <p class="eyebrow reveal">Hogyan dolgozunk együtt</p>
-        <h2 id="folyamat-cim" class="reveal">Négy lépés, meglepetések nélkül.</h2>
-      </div>
-
-      <ol class="process draw">
-        <li class="process__step reveal">
-          <span class="process__num">01</span>
-          <h3 class="process__title">Ismerkedés</h3>
-          <p class="process__desc">Elmondod, mi hozott. Kiderül, hogy jó helyen vagy-e.</p>
-          <p class="process__meta">30 perc · díjmentes</p>
-        </li>
-        <li class="process__step reveal d1">
-          <span class="process__num">02</span>
-          <h3 class="process__title">Irányba állás</h3>
-          <p class="process__desc">Tisztázzuk, hol tartasz most, és hova szeretnél eljutni.</p>
-          <p class="process__meta">60 perc</p>
-        </li>
-        <li class="process__step reveal d2">
-          <span class="process__num">03</span>
-          <h3 class="process__title">Közös munka</h3>
-          <p class="process__desc">Konkrét, kipróbálható lépések. Minden alkalom végén tudod, mi jön.</p>
-          <p class="process__meta">60 perc / alkalom · jellemzően 4–8 alkalom</p>
-        </li>
-        <li class="process__step reveal d3">
-          <span class="process__num">04</span>
-          <h3 class="process__title">Lezárás</h3>
-          <p class="process__desc">Összegzés és egy terv, amit már egyedül is viszel tovább.</p>
-          <p class="process__meta">60 perc</p>
-        </li>
-      </ol>
-
-      <p class="section__outro reveal">
-        <a class="link-arrow" href="#foglalas">Kezdjük az elsővel</a>
-      </p>
-    </div>
-  </section>
-
-  <!-- ========================================================== 05 KÉPSÁV -->
-  <figure class="band reveal">
-    <!-- CSERE: a stock fotó helyére valódi kép a saját teredről -->
-    <picture>
-      <source media="(min-width: 900px)"
-              srcset="https://images.unsplash.com/photo-1679215805585-bd03a616d807?auto=format&amp;fit=crop&amp;w=2000&amp;h=857&amp;q=80">
-      <img class="band__img"
-           src="https://images.unsplash.com/photo-1679215805585-bd03a616d807?auto=format&amp;fit=crop&amp;w=1000&amp;h=667&amp;q=80"
-           alt="Két ember beszélget egy világos, nyugodt nappaliban"
-           width="1000" height="667" loading="lazy" decoding="async">
-    </picture>
-    <figcaption class="band__caption container">
-      Egy nyugodt, zavartalan tér, ahol nem kell teljesítened semmit.
-      Személyesen <span class="ph">[ helyszín ]</span>, vagy online, otthonról.
-    </figcaption>
-  </figure>
-
-  <!-- ========================================================== 06 BEMUTATKOZÁS -->
+  <!-- ========================================================== 04 BEMUTATKOZÁS -->
   <section class="about bleed" id="rolam" aria-labelledby="rolam-cim">
     <div class="about__inner">
 
@@ -256,6 +225,64 @@
 
     </div>
   </section>
+
+  <!-- ========================================================== 05 FOLYAMAT -->
+  <section class="section" id="folyamat" aria-labelledby="folyamat-cim">
+    <div class="container">
+      <div class="section__head narrow">
+        <p class="eyebrow reveal">Hogyan dolgozunk együtt</p>
+        <h2 id="folyamat-cim" class="reveal">Négy lépés, meglepetések nélkül.</h2>
+      </div>
+
+      <ol class="process draw">
+        <li class="process__step reveal">
+          <span class="process__num">01</span>
+          <h3 class="process__title">Ismerkedés</h3>
+          <p class="process__desc">Elmondod, mi hozott. Kiderül, hogy jó helyen vagy-e.</p>
+          <p class="process__meta">30 perc · díjmentes</p>
+        </li>
+        <li class="process__step reveal d1">
+          <span class="process__num">02</span>
+          <h3 class="process__title">Irányba állás</h3>
+          <p class="process__desc">Tisztázzuk, hol tartasz most, és hova szeretnél eljutni.</p>
+          <p class="process__meta">60 perc</p>
+        </li>
+        <li class="process__step reveal d2">
+          <span class="process__num">03</span>
+          <h3 class="process__title">Közös munka</h3>
+          <p class="process__desc">Konkrét, kipróbálható lépések. Minden alkalom végén tudod, mi jön.</p>
+          <p class="process__meta">60 perc / alkalom · jellemzően 4–8 alkalom</p>
+        </li>
+        <li class="process__step reveal d3">
+          <span class="process__num">04</span>
+          <h3 class="process__title">Lezárás</h3>
+          <p class="process__desc">Összegzés és egy terv, amit már egyedül is viszel tovább.</p>
+          <p class="process__meta">60 perc</p>
+        </li>
+      </ol>
+
+      <p class="section__outro reveal">
+        <a class="link-arrow" href="#foglalas">Kezdjük az elsővel</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========================================================== 06 KÉPSÁV -->
+  <figure class="band reveal">
+    <!-- CSERE: a stock fotó helyére valódi kép a saját teredről -->
+    <picture>
+      <source media="(min-width: 900px)"
+              srcset="https://images.unsplash.com/photo-1679215805585-bd03a616d807?auto=format&amp;fit=crop&amp;w=2000&amp;h=857&amp;q=80">
+      <img class="band__img"
+           src="https://images.unsplash.com/photo-1679215805585-bd03a616d807?auto=format&amp;fit=crop&amp;w=1000&amp;h=667&amp;q=80"
+           alt="Két ember beszélget egy világos, nyugodt nappaliban"
+           width="1000" height="667" loading="lazy" decoding="async">
+    </picture>
+    <figcaption class="band__caption container">
+      Egy nyugodt, zavartalan tér, ahol nem kell teljesítened semmit.
+      Személyesen <span class="ph">[ helyszín ]</span>, vagy online, otthonról.
+    </figcaption>
+  </figure>
 
   <!-- ========================================================== 07 SZEMLÉLET -->
   <section class="statement" aria-labelledby="szemlelet-cim">
@@ -459,12 +486,17 @@
     <div class="container booking">
       <h2 id="foglalas-cim" class="booking__title reveal">Kezdjük egy beszélgetéssel.</h2>
 
+      <!--
+        CSERE: a data-cal-link értéke a Cal.com esemény útvonala, pl. "scialla/ismerkedes"
+        (a cal.com/ utáni rész). Amíg üres, nincs beágyazott naptár, és az alábbi
+        mailto: gomb a foglalás módja. Ha a naptár nem tölt be, ugyanez a gomb marad.
+      -->
+      <div class="booking__cal" id="calEmbed" data-cal-link="" hidden>
+        <p class="booking__cal-loading">Naptár betöltése…</p>
+      </div>
+
       <div class="booking__cta reveal d1">
-        <!--
-          CSERE: ide kerül a foglalórendszer linkje, pl.
-          href="https://cal.com/scialla/ismerkedes" target="_blank" rel="noopener"
-          Amíg nincs foglalórendszer, a mailto: link működik.
-        -->
+        <p class="booking__cta-alt">Nem jelenik meg a naptár, vagy inkább írnál? Kérj időpontot e-mailben.</p>
         <a class="btn btn--primary btn--lg"
            href="mailto:hello@scialla.hu?subject=Id%C5%91pontfoglal%C3%A1s%20%E2%80%94%20els%C5%91%20besz%C3%A9lget%C3%A9s">
           Időpontot foglalok
@@ -523,6 +555,6 @@
   <a class="btn btn--primary btn--block" href="#foglalas">Időpontot foglalok</a>
 </div>
 
-<script src="assets/script.js?v=2" defer></script>
+<script src="assets/script.js?v=3" defer></script>
 </body>
 </html>

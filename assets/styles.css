@@ -174,6 +174,63 @@ h3{font-size:1.25rem;line-height:1.3;font-weight:400}
 }
 .site-nav a:hover,.site-nav a.is-current{color:var(--ink)}
 .site-nav a:hover::after,.site-nav a.is-current::after{transform:scaleX(1)}
+.site-header__actions{display:flex;align-items:center;gap:4px}
+
+/* Menügomb: csak JS-sel és csak teljes navigáció alatt látszik */
+.menu-toggle{
+  display:none;align-items:center;gap:10px;
+  min-height:44px;min-width:44px;padding:0 4px 0 12px;
+  background:none;border:0;cursor:pointer;
+  font-family:var(--sans);font-size:.8125rem;font-weight:600;color:var(--ink);
+}
+.js .menu-toggle{display:inline-flex}
+.menu-toggle__icon{position:relative;width:18px;height:8px}
+.menu-toggle__icon::before,.menu-toggle__icon::after{
+  content:"";position:absolute;left:0;right:0;height:1.5px;background:currentColor;
+  transition:transform .22s var(--ease),top .22s var(--ease);
+}
+.menu-toggle__icon::before{top:0}
+.menu-toggle__icon::after{top:6.5px}
+.menu-toggle[aria-expanded="true"] .menu-toggle__icon::before{top:3.25px;transform:rotate(45deg)}
+.menu-toggle[aria-expanded="true"] .menu-toggle__icon::after{top:3.25px;transform:rotate(-45deg)}
+
+/* --- 6b. Mobil menü ------------------------------------------------------ */
+.mobile-nav{
+  position:fixed;inset:var(--header-h) 0 0 0;z-index:45;
+  background:var(--carta);
+  box-shadow:inset 0 1px 0 var(--filo);
+  overflow-y:auto;overscroll-behavior:contain;
+  opacity:0;transform:translateY(-8px);
+  transition:opacity .22s var(--ease),transform .22s var(--ease);
+}
+.mobile-nav[hidden]{display:none}
+.mobile-nav.is-open{opacity:1;transform:none}
+.mobile-nav__inner{
+  display:flex;flex-direction:column;gap:40px;
+  min-height:100%;padding-block:16px calc(32px + env(safe-area-inset-bottom));
+}
+.mobile-nav__list{list-style:none;padding:0}
+.mobile-nav__list li{border-bottom:1px solid var(--filo)}
+.mobile-nav__list a{
+  display:flex;align-items:baseline;gap:18px;padding:18px 0;
+  font-family:var(--serif);font-weight:300;font-size:1.75rem;line-height:1.2;
+  color:var(--ink);text-decoration:none;
+  transition:color .18s var(--ease);
+}
+.mobile-nav__list a span{
+  font-family:var(--sans);font-size:.75rem;font-weight:600;
+  letter-spacing:.1em;color:var(--ottone);
+}
+.mobile-nav__list a:hover,.mobile-nav__list a.is-current{color:var(--ottone)}
+.mobile-nav__foot{margin-top:auto}
+.mobile-nav__mail{
+  display:inline-block;margin-top:20px;padding-block:10px;color:var(--ink);
+  text-decoration:underline;text-decoration-color:var(--filo-strong);
+  text-underline-offset:5px;text-decoration-thickness:1px;
+}
+html.nav-open{overflow:hidden}
+html.nav-open .mobile-cta{transform:translateY(115%)}
+@media (max-width:399px){.hide-xs{display:none}}
 
 /* --- 7. Hero ------------------------------------------------------------- */
 .hero{padding-block:clamp(48px,9vw,112px) clamp(64px,10vw,128px)}
@@ -258,6 +315,8 @@ h3{font-size:1.25rem;line-height:1.3;font-weight:400}
 
 /* --- 11. Bemutatkozás ---------------------------------------------------- */
 .about{padding-block:clamp(80px,12vw,128px)}
+/* két azonos hátterű blokk között ne duplázódjon a térköz */
+.about + .section{padding-top:0}
 .about__inner{grid-column:content;display:grid;gap:clamp(40px,6vw,72px);align-items:start}
 .about__media img{
   width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;
@@ -383,6 +442,28 @@ h3{font-size:1.25rem;line-height:1.3;font-weight:400}
   font-size:clamp(2.125rem,7vw,4rem);line-height:1.06;letter-spacing:-.02em;
   max-width:14ch;
 }
+/* Beágyazott Cal.com naptár: a hely előre le van foglalva, hogy ne ugorjon az oldal */
+.booking__cal{
+  position:relative;min-height:640px;
+  background:var(--nebbia);border-radius:2px;overflow:hidden;
+}
+.booking__cal[hidden]{display:none}
+.booking__cal iframe{display:block}
+.booking__cal-loading{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:.875rem;color:var(--pietra);
+}
+.booking__cal.is-ready{background:none}
+.booking__cal.is-ready .booking__cal-loading{display:none}
+.booking__cta-alt{display:none;margin-bottom:16px;color:var(--pietra);max-width:34em}
+/* Ha él a naptár, az e-mailes gomb másodlagos útvonallá válik */
+.has-cal .booking__cta-alt{display:block}
+.has-cal .booking__cta .btn{
+  min-height:48px;padding:0 24px;font-size:.9375rem;
+  background:transparent;color:var(--ink);border-color:var(--ink);
+}
+.has-cal .booking__cta .btn:hover{background:var(--ink);color:var(--carta)}
+.has-cal .booking__cta .btn-note{display:none}
 .booking__alt{
   padding-top:clamp(28px,4vw,36px);
   border-top:1px solid var(--filo);color:var(--pietra);
@@ -543,6 +624,7 @@ h3{font-size:1.25rem;line-height:1.3;font-weight:400}
 /* --- >=1000px: teljes navigáció ------------------------------------------ */
 @media (min-width:1000px){
   .site-nav{display:flex;gap:32px}
+  .js .menu-toggle,.mobile-nav{display:none}
 }
 
 /* --- >=1200px: a bizalmi sáv egy sorba fér ------------------------------- */
