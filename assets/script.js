@@ -338,7 +338,7 @@
         "E-mail: " + (data.get("email") || ""),
         "Telefon: " + (data.get("telefon") || "—"),
         "Téma: " + (data.getAll("tema").join(", ") || "—"),
-        "Forma: " + (data.get("forma") || "—"),
+        "Időpont: " + (data.getAll("idopont").join(", ") || "—"),
         "",
         String(data.get("uzenet") || "")
       ];

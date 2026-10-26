@@ -49,10 +49,10 @@ Kézi deployhoz: `npx vercel --prod`
 
 | # | Szekció | Layout |
 |---|---|---|
-| 01 | Hero | aszimmetrikus split, portré jobbra kifutva |
+| 01 | Hero | aszimmetrikus split, hangulatkép jobbra kifutva |
 | 02 | Miben segítek | hajszálvonalas sorindex |
 | 03 | Kinek szól | Nebbia sáv, sticky cím + kétszintű lista |
-| 04 | Rólam | tükrözött split, kép balra kifutva |
+| 04 | Rólam | fotó nélkül: sticky cím + szöveg és szakmai háttér |
 | 05 | Hogyan dolgozunk | négylépéses idővonal |
 | 06 | Képsáv | teljes szélességű fotó, 21:9 |
 | 07 | Szemlélet | teljes szélességű sötét sáv, egy mondat |
@@ -72,17 +72,16 @@ külön feltüntetés nélkül.
 
 | Hol | Kép |
 |---|---|
-| Hero | `photo-1745434159123-4908d0b9df94` |
-| Képsáv | `photo-1679215805585-bd03a616d807` |
-| Rólam | `photo-1728931710079-5fff6ae56b89` |
+| Hero (és OG-kép) | `photo-1728931710079-5fff6ae56b89` — teáscsésze, jegyzetfüzet |
+| Képsáv | `photo-1703914647827-5e4d2e7d5365` — tea laptop mellett (online jelleg) |
 
-**Élesítés előtt cserélni kell** — két okból: egyrészt a coach valódi arca
-sokkal többet konvertál bármilyen stockfotónál, másrészt külső CDN-ről
+**A coach nem szeretne megjelenni az oldalon**, ezért portré nincs; csak arc nélküli
+hangulatképek. Élesítés előtt érdemes őket letölteni a repóba, mert külső CDN-ről
 betölteni képet éles oldalon törékeny (ha az Unsplash változtat, a kép eltűnik).
 
 A csere menete: tedd a fotókat az `assets/img/` mappába, és írd át az `index.html`
-három `<img>` blokkját. Mindegyiket `<!-- CSERE: ... -->` komment jelöli.
-Javasolt méret: 1600 × 2000 px (portré) és 2400 × 1030 px (képsáv), WebP vagy AVIF.
+két `<img>` blokkját (hero, képsáv).
+Javasolt méret: 1600 × 2000 px (hero) és 2400 × 1030 px (képsáv), WebP vagy AVIF.
 
 Amíg stockfotó van bent, a `.photo` és `.band__img` osztály egységes tónust ad
 nekik (`saturate(.92) contrast(1.03)` + finom sötét lefutás), hogy a paletta
@@ -97,13 +96,12 @@ A cserélendő helyeket az oldalon **szaggatottan aláhúzott, sárgaréz szín�
 
 | Mi | Hol |
 |---|---|
-| Három fotó (lásd fent) | `index.html` `<img>` blokkok |
-| A coach neve | `index.html` — „A SCIALLA mögött” blokk |
+| Két hangulatkép letöltése a repóba (lásd fent) | `index.html` `<img>` blokkok |
+| A coach neve (csak ha szeretné) | `index.html` — `.prose` első bekezdése |
 | Bemutatkozó szöveg (2 bekezdés) | `index.html` — `.prose` |
 | Szakmai háttér | `index.html` — `.credentials` |
 | **Vélemények** | `index.html` — `#velemenyek`; jelenleg mintaszöveg |
 | Óradíj | `index.html` — GYIK első kérdése |
-| Helyszín | `index.html` — a képsáv képaláírása |
 | E-mail, telefon, Facebook URL | `index.html`, jogi oldalak |
 | Cal.com esemény útvonala | `index.html` — `#calEmbed` `data-cal-link` attribútuma (lásd lent) |
 | Adatvédelmi és impresszum szövegek | `adatvedelem.html`, `impresszum.html` |
@@ -114,8 +112,8 @@ A cserélendő helyeket az oldalon **szaggatottan aláhúzott, sárgaréz szín�
 > közzétenni fogyasztóvédelmi jogszabályba ütközik. A szekcióban erre
 > figyelmeztető szöveg is van — azt is töröld, amikor bekerülnek a valódiak.
 
-> Az asset-hivatkozásokon `?v=4` verziószám van. **Minden CSS/JS módosítás után
-> növeld meg** (`?v=5`), különben a visszatérő látogató egy órán át a régi
+> Az asset-hivatkozásokon `?v=5` verziószám van. **Minden CSS/JS módosítás után
+> növeld meg** (`?v=6`), különben a visszatérő látogató egy órán át a régi
 > fájlt kapja a Vercel cache-éből.
 
 ---
@@ -181,7 +179,7 @@ Helyi előnézet Python nélkül: `powershell -File .claude/serve.ps1` → `http
 ## Kapcsolatfelvételi űrlap
 
 A `#foglalas` szekció alján (`#uzenet`). Mezők: név*, e-mail*, telefon, témák
-(több is jelölhető), forma (online / személyesen / mindegy), szabad szöveg,
+(több is jelölhető), időpont-preferencia (délelőtt / délután / este / hétvégén), szabad szöveg,
 adatkezelési hozzájárulás*. Magyar nyelvű, mezőnkénti hibaüzenetek; spamcsapda (`_gotcha`).
 
 **Küldés:** a `#contactForm` `action` attribútuma dönt.
