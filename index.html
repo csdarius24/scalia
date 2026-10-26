@@ -21,7 +21,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..500;1,6..72,200..400&family=Schibsted+Grotesk:wght@400..600&display=swap">
-<link rel="stylesheet" href="assets/styles.css?v=3">
+<link rel="stylesheet" href="assets/styles.css?v=4">
 <script>document.documentElement.className += " js";</script>
 </head>
 
@@ -79,7 +79,7 @@
 
       <div class="hero__text">
         <p class="eyebrow reveal">Life · családi · kapcsolati coaching</p>
-        <h1 id="hero-cim" class="hero__title reveal d1">Nem kell egyedül vinned.</h1>
+        <h1 id="hero-cim" class="hero__title split reveal d1">Nem kell egyedül vinned.</h1>
         <p class="lead reveal d2">
           Szorongás, kiégés, pánik, önbizalomhiány, kapcsolati nehézségek — négyszemközti,
           ítélkezésmentes coaching, a te tempódban. Az első beszélgetés díjmentes.
@@ -288,7 +288,7 @@
   <section class="statement" aria-labelledby="szemlelet-cim">
     <div class="container statement__inner">
       <span class="statement__rule reveal" aria-hidden="true"></span>
-      <h2 id="szemlelet-cim" class="statement__text reveal d1">
+      <h2 id="szemlelet-cim" class="statement__text split reveal d1">
         Nem én tudom a válaszaidat.<br>
         Abban segítek, hogy te megtaláld őket.
       </h2>
@@ -311,6 +311,7 @@
 
       <ul class="quotes">
         <li class="quote quote--lead reveal">
+          <span class="quote__mark" aria-hidden="true">&ldquo;</span>
           <blockquote>
             Azzal jöttem, hogy váltanom kellene. A harmadik alkalom után jöttem rá,
             hogy nem a munkámmal van bajom, hanem azzal, hogy évek óta nem mondtam nemet senkinek.
@@ -484,32 +485,134 @@
   <!-- ========================================================== 12 FOGLALÁS -->
   <section class="section section--closing" id="foglalas" aria-labelledby="foglalas-cim">
     <div class="container booking">
-      <h2 id="foglalas-cim" class="booking__title reveal">Kezdjük egy beszélgetéssel.</h2>
+      <div class="booking__head">
+        <h2 id="foglalas-cim" class="booking__title split reveal">Kezdjük egy beszélgetéssel.</h2>
+        <p class="booking__meta reveal d1">30 perc · online vagy személyesen · díjmentes · nem kötelez semmire</p>
+      </div>
 
       <!--
         CSERE: a data-cal-link értéke a Cal.com esemény útvonala, pl. "scialla/ismerkedes"
         (a cal.com/ utáni rész). Amíg üres, nincs beágyazott naptár, és az alábbi
-        mailto: gomb a foglalás módja. Ha a naptár nem tölt be, ugyanez a gomb marad.
+        űrlap a foglalás módja. Ha a naptár nem tölt be, ugyanez az űrlap marad.
       -->
       <div class="booking__cal" id="calEmbed" data-cal-link="" hidden>
         <p class="booking__cal-loading">Naptár betöltése…</p>
       </div>
 
-      <div class="booking__cta reveal d1">
-        <p class="booking__cta-alt">Nem jelenik meg a naptár, vagy inkább írnál? Kérj időpontot e-mailben.</p>
-        <a class="btn btn--primary btn--lg"
-           href="mailto:hello@scialla.hu?subject=Id%C5%91pontfoglal%C3%A1s%20%E2%80%94%20els%C5%91%20besz%C3%A9lget%C3%A9s">
-          Időpontot foglalok
-        </a>
-        <p class="btn-note">30 perc · online · díjmentes · nem kötelez semmire</p>
-      </div>
+      <div class="contact" id="uzenet">
+        <div class="contact__intro reveal">
+          <p class="eyebrow"><span class="contact__eyebrow-cal">Inkább írnál?</span><span class="contact__eyebrow-solo">Írj pár sort</span></p>
+          <h3 class="contact__title">Írd meg, mi hozott ide — visszajelzek, és együtt keresünk időpontot.</h3>
+          <p class="contact__text">
+            Nem kell kész mondatokkal érkezned. Elég egy név és egy e-mail-cím;
+            a többit, ha szeretnéd, az első beszélgetésen mondod el.
+          </p>
+          <p class="contact__promise">Általában egy munkanapon belül válaszolok.</p>
 
-      <div class="booking__alt reveal d2">
-        <p>Ha inkább írnál vagy telefonálnál:</p>
-        <ul class="contact-list">
-          <li><a href="mailto:hello@scialla.hu">hello@scialla.hu</a></li>
-          <li><a href="tel:+3600000000"><span class="ph">[ +36 30 000 0000 ]</span></a></li>
-        </ul>
+          <div class="contact__direct">
+            <p>Vagy közvetlenül:</p>
+            <ul class="contact-list">
+              <li><a href="mailto:hello@scialla.hu">hello@scialla.hu</a></li>
+              <li><a href="tel:+3600000000"><span class="ph">[ +36 30 000 0000 ]</span></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!--
+          CSERE: az action-be a Formspree (vagy más űrlapszolgáltató) végpontja kerül, pl.
+          action="https://formspree.io/f/abcdwxyz". Amíg mailto:, a küldés a látogató
+          levelezőprogramját nyitja meg kitöltött levéllel.
+        -->
+        <form class="form reveal d1" id="contactForm" action="mailto:hello@scialla.hu" method="post"
+              enctype="text/plain" novalidate>
+
+          <div class="form__row form__row--2">
+            <div class="field">
+              <label class="field__label" for="f-nev">Név</label>
+              <input class="field__input" id="f-nev" name="nev" type="text"
+                     autocomplete="name" required maxlength="80"
+                     data-msg="Add meg, hogyan szólíthatlak.">
+              <p class="field__error" id="f-nev-err" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label class="field__label" for="f-email">E-mail</label>
+              <input class="field__input" id="f-email" name="email" type="email"
+                     autocomplete="email" inputmode="email" required maxlength="120"
+                     data-msg="Adj meg egy érvényes e-mail-címet, hogy válaszolni tudjak.">
+              <p class="field__error" id="f-email-err" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="f-tel">Telefon <span class="field__opt">nem kötelező</span></label>
+            <input class="field__input" id="f-tel" name="telefon" type="tel"
+                   autocomplete="tel" inputmode="tel" maxlength="30" placeholder="+36">
+          </div>
+
+          <fieldset class="field">
+            <legend class="field__label">Miben kérnél segítséget? <span class="field__opt">több is jelölhető</span></legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="tema" value="Szorongás"><span>Szorongás</span></label>
+              <label class="chip"><input type="checkbox" name="tema" value="Kiégés"><span>Kiégés</span></label>
+              <label class="chip"><input type="checkbox" name="tema" value="Pánik"><span>Pánik</span></label>
+              <label class="chip"><input type="checkbox" name="tema" value="Önbizalom"><span>Önbizalom</span></label>
+              <label class="chip"><input type="checkbox" name="tema" value="Kapcsolati nehézség"><span>Kapcsolati nehézség</span></label>
+              <label class="chip"><input type="checkbox" name="tema" value="Még nem tudom"><span>Még nem tudom</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="field">
+            <legend class="field__label">Hogyan beszélgetnél szívesebben?</legend>
+            <div class="chips">
+              <label class="chip"><input type="radio" name="forma" value="Online" checked><span>Online</span></label>
+              <label class="chip"><input type="radio" name="forma" value="Személyesen"><span>Személyesen</span></label>
+              <label class="chip"><input type="radio" name="forma" value="Mindegy"><span>Mindegy</span></label>
+            </div>
+          </fieldset>
+
+          <div class="field">
+            <label class="field__label" for="f-uzenet">Pár mondat arról, mi hozott ide <span class="field__opt">nem kötelező</span></label>
+            <textarea class="field__input field__input--area" id="f-uzenet" name="uzenet" rows="4" maxlength="2000"
+                      placeholder="Ha még nem szeretnél részleteket írni, az is teljesen rendben van."></textarea>
+          </div>
+
+          <!-- spamcsapda: ember nem látja, bot kitölti -->
+          <div class="form__trap" aria-hidden="true">
+            <label for="f-web">Weboldal</label>
+            <input id="f-web" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="field">
+            <label class="check">
+              <input type="checkbox" name="hozzajarulas" value="igen" required
+                     data-msg="A küldéshez szükség van a hozzájárulásodra.">
+              <span>
+                Elolvastam az <a href="adatvedelem.html" target="_blank" rel="noopener">adatvédelmi tájékoztatót</a>,
+                és hozzájárulok, hogy a megadott adataimat — az egészségi állapotomra utaló információkat is —
+                kizárólag a kapcsolatfelvétel céljából kezeld.
+              </span>
+            </label>
+            <p class="field__error" aria-live="polite"></p>
+          </div>
+
+          <div class="form__submit">
+            <button class="btn btn--primary btn--lg form__btn" type="submit">
+              <span class="form__btn-label">Üzenet küldése</span>
+            </button>
+            <p class="btn-note">Az üzeneted csak én olvasom, és harmadik félnek nem adom tovább.</p>
+          </div>
+
+          <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="form-done" id="formDone" hidden tabindex="-1">
+          <svg class="form-done__mark" viewBox="0 0 52 52" aria-hidden="true">
+            <circle cx="26" cy="26" r="24"/><path d="M15 27l7 7 15-16"/>
+          </svg>
+          <h3 class="form-done__title">Köszönöm, megkaptam.</h3>
+          <p class="form-done__text">Hamarosan jelentkezem a megadott e-mail-címen, és egyeztetünk egy
+            időpontot az első, díjmentes beszélgetésre.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -555,6 +658,6 @@
   <a class="btn btn--primary btn--block" href="#foglalas">Időpontot foglalok</a>
 </div>
 
-<script src="assets/script.js?v=3" defer></script>
+<script src="assets/script.js?v=4" defer></script>
 </body>
 </html>

@@ -12,6 +12,38 @@
   var reduceMotion =
     window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* --- 0. Címek szavakra bontása a felúszó animációhoz ------------------ */
+  // A felolvasó az eredeti mondatot kapja (aria-label), a darabolt szavakat nem.
+  var splitEls = document.querySelectorAll(".split");
+  for (var s = 0; s < splitEls.length; s++) {
+    var el = splitEls[s];
+    var idx = 0;
+    el.setAttribute("aria-label", el.textContent.replace(/\s+/g, " ").trim());
+    var nodes = Array.prototype.slice.call(el.childNodes);
+    for (var n = 0; n < nodes.length; n++) {
+      var node = nodes[n];
+      if (node.nodeType !== 3) continue; // a <br> és társai maradnak
+      var frag = document.createDocumentFragment();
+      var parts = node.textContent.split(/(\s+)/);
+      for (var p = 0; p < parts.length; p++) {
+        if (!parts[p]) continue;
+        if (/^\s+$/.test(parts[p])) {
+          frag.appendChild(document.createTextNode(" "));
+          continue;
+        }
+        var outer = document.createElement("span");
+        var inner = document.createElement("span");
+        outer.className = "w";
+        outer.setAttribute("aria-hidden", "true");
+        inner.textContent = parts[p];
+        inner.style.setProperty("--i", idx++);
+        outer.appendChild(inner);
+        frag.appendChild(outer);
+      }
+      el.replaceChild(frag, node);
+    }
+  }
+
   /* --- 1–2. Reveal + idővonal ------------------------------------------- */
   var revealEls = document.querySelectorAll(".reveal");
   var drawEls = document.querySelectorAll(".draw");
@@ -248,6 +280,120 @@
     } else {
       loadCal();
     }
+  }
+
+  /* --- 4e. Kapcsolatfelvételi űrlap ------------------------------------- */
+  // Ha az action http(s) végpont (pl. Formspree), háttérben küld; ha mailto:,
+  // a látogató levelezőjét nyitja meg kitöltött levéllel.
+  var form = document.getElementById("contactForm");
+  if (form) {
+    var formDone = document.getElementById("formDone");
+    var formStatus = document.getElementById("formStatus");
+    var submitBtn = form.querySelector(".form__btn");
+    var required = form.querySelectorAll("[required]");
+
+    var setError = function (input, msg) {
+      var field = input.closest(".field");
+      var err = field && field.querySelector(".field__error");
+      if (!field) return;
+      field.classList.toggle("is-invalid", !!msg);
+      if (err) {
+        err.textContent = msg || "";
+        if (err.id) input.setAttribute("aria-describedby", err.id);
+      }
+      input.setAttribute("aria-invalid", msg ? "true" : "false");
+    };
+
+    var check = function (input) {
+      var ok = input.type === "checkbox" ? input.checked : input.checkValidity() && input.value.trim() !== "";
+      setError(input, ok ? "" : input.getAttribute("data-msg"));
+      return ok;
+    };
+
+    for (var q = 0; q < required.length; q++) {
+      (function (input) {
+        input.addEventListener("blur", function () {
+          if (input.type !== "checkbox" && input.value) check(input);
+        });
+        // Hiba után gépelés közben azonnal eltűnik, amint helyes
+        input.addEventListener(input.type === "checkbox" ? "change" : "input", function () {
+          if (input.closest(".field").classList.contains("is-invalid")) check(input);
+        });
+      })(required[q]);
+    }
+
+    var finish = function () {
+      form.hidden = true;
+      if (formDone) {
+        formDone.hidden = false;
+        formDone.focus({ preventScroll: true });
+        formDone.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+      }
+    };
+
+    var buildMailto = function () {
+      var data = new FormData(form);
+      var lines = [
+        "Név: " + (data.get("nev") || ""),
+        "E-mail: " + (data.get("email") || ""),
+        "Telefon: " + (data.get("telefon") || "—"),
+        "Téma: " + (data.getAll("tema").join(", ") || "—"),
+        "Forma: " + (data.get("forma") || "—"),
+        "",
+        String(data.get("uzenet") || "")
+      ];
+      var to = form.getAttribute("action").replace(/^mailto:/, "").split("?")[0];
+      return "mailto:" + to +
+        "?subject=" + encodeURIComponent("Első beszélgetés — " + (data.get("nev") || "")) +
+        "&body=" + encodeURIComponent(lines.join("\n"));
+    };
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (formStatus) { formStatus.textContent = ""; formStatus.classList.remove("is-error"); }
+
+      var firstBad = null;
+      for (var r = 0; r < required.length; r++) {
+        if (!check(required[r]) && !firstBad) firstBad = required[r];
+      }
+      if (firstBad) { firstBad.focus(); return; }
+
+      // Spamcsapda: ha ki van töltve, csendben "sikeres"
+      if (form.elements._gotcha && form.elements._gotcha.value) { finish(); return; }
+
+      var action = form.getAttribute("action") || "";
+      if (!/^https?:/i.test(action)) {
+        window.location.href = buildMailto();
+        if (formStatus) {
+          formStatus.innerHTML = "A levelezőprogramod a kitöltött üzenettel nyílik meg — ott már csak a Küldés gombot kell megnyomnod. " +
+            'Ha nem nyílt meg, írj közvetlenül: <a href="mailto:hello@scialla.hu">hello@scialla.hu</a>';
+        }
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.classList.add("is-sending");
+      fetch(action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" }
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error(res.status);
+          finish();
+        })
+        .catch(function () {
+          if (formStatus) {
+            formStatus.classList.add("is-error");
+            formStatus.innerHTML = "Most nem sikerült elküldeni. Próbáld újra, vagy írj közvetlenül: " +
+              '<a href="mailto:hello@scialla.hu">hello@scialla.hu</a>';
+          }
+        })
+        .then(function () {
+          submitBtn.disabled = false;
+          submitBtn.classList.remove("is-sending");
+        });
+    });
   }
 
   /* --- 5. Copyright évszám ---------------------------------------------- */

@@ -16,7 +16,7 @@ vercel.json           biztonsági fejlécek + cache
 .gitignore            mi NEM kerül fel a GitHubra
 assets/
   styles.css          teljes design rendszer, CSS custom property tokenekkel
-  script.js           scroll-reveal, sticky header, mobil menü és CTA sáv, aktív menüpont, Cal.com
+  script.js           scroll-reveal, sticky header, mobil menü, CTA sáv, aktív menüpont, Cal.com, űrlap, animációk
   img/favicon.svg
 _ajanlat/             árajánlat — se a GitHubra, se a deployra nem kerül fel
 ```
@@ -114,8 +114,8 @@ A cserélendő helyeket az oldalon **szaggatottan aláhúzott, sárgaréz szín�
 > közzétenni fogyasztóvédelmi jogszabályba ütközik. A szekcióban erre
 > figyelmeztető szöveg is van — azt is töröld, amikor bekerülnek a valódiak.
 
-> Az asset-hivatkozásokon `?v=3` verziószám van. **Minden CSS/JS módosítás után
-> növeld meg** (`?v=4`), különben a visszatérő látogató egy órán át a régi
+> Az asset-hivatkozásokon `?v=4` verziószám van. **Minden CSS/JS módosítás után
+> növeld meg** (`?v=5`), különben a visszatérő látogató egy órán át a régi
 > fájlt kapja a Vercel cache-éből.
 
 ---
@@ -168,11 +168,44 @@ A `#foglalas` szekcióban beágyazott Cal.com naptár van, de **csak akkor jelen
 ha az `index.html`-ben a `#calEmbed` elem `data-cal-link` attribútuma ki van töltve**
 (pl. `data-cal-link="scialla/ismerkedes"`, vagyis a `cal.com/` utáni rész).
 
-- Üres értéknél nincs naptár; ilyenkor a `mailto:` gomb a foglalás módja.
+- Üres értéknél nincs naptár; ilyenkor a kapcsolatfelvételi űrlap a foglalás módja.
 - A Cal.com szkript csak akkor töltődik be, amikor a látogató a foglalás közelébe görget.
-- Ha a szkript nem tölt be, vagy 12 másodperc alatt nem jelenik meg a naptár, az oldal
-  automatikusan visszaáll az e-mailes gombra.
-- Élő naptár mellett az e-mailes gomb másodlagos, körvonalas gomb lesz.
+- Ha a szkript nem tölt be, vagy 12 másodperc alatt nem jelenik meg a naptár, az űrlap marad
+- Élő naptár mellett az űrlap „Inkább írnál?” címmel, másodlagos útként jelenik meg.
 - **Az adatvédelmi tájékoztatóba be kell írni a Cal.com-ot** mint adatfeldolgozót.
 
 Helyi előnézet Python nélkül: `powershell -File .claude/serve.ps1` → `http://localhost:4321`
+
+---
+
+## Kapcsolatfelvételi űrlap
+
+A `#foglalas` szekció alján (`#uzenet`). Mezők: név*, e-mail*, telefon, témák
+(több is jelölhető), forma (online / személyesen / mindegy), szabad szöveg,
+adatkezelési hozzájárulás*. Magyar nyelvű, mezőnkénti hibaüzenetek; spamcsapda (`_gotcha`).
+
+**Küldés:** a `#contactForm` `action` attribútuma dönt.
+
+- `mailto:hello@scialla.hu` (jelenleg): a látogató levelezőprogramja nyílik meg a kitöltött levéllel.
+- `https://formspree.io/f/…` (ajánlott élesben): háttérben küld, utána köszönő üzenet jelenik meg.
+  Ingyenes Formspree fiók → új űrlap → az URL-t az `action`-be. Más szolgáltató is jó,
+  ha JSON választ ad `Accept: application/json` fejlécre.
+
+> A témaválasztás egészségügyi adatnak minősülhet (GDPR 9. cikk). A hozzájárulás
+> szövege ezt lefedi, de **az adatvédelmi tájékoztatóba be kell írni** az űrlapot és
+> az űrlapszolgáltatót is.
+
+---
+
+## Animációk
+
+Mind kikapcsol `prefers-reduced-motion` esetén, és JS nélkül is minden látszik.
+
+- Szekcióelemek: felúszás + enyhe elmosódásból élesedés (`.reveal`).
+- Nagy címek (`.split`): szavanként felúsznak; a felolvasó az `aria-label`-ben az egész mondatot kapja.
+- Fotók: alulról kinyíló maszk, a kép közben a helyére ül.
+- Eyebrow-k előtti vonal, sötét sáv vonala, idővonal: kirajzolódnak.
+- Képsáv: enyhe parallax; fejléc alján olvasási csík — CSS scroll-driven animációval,
+  ahol a böngésző nem támogatja, egyszerűen elmarad.
+- GYIK: lágy nyitás (`::details-content`, Chrome 131+), máshol azonnali.
+- Mobil menü sorai egymás után úsznak be; űrlap: kiterülő aláhúzás fókuszra, chip-ek, pipa-animáció.
