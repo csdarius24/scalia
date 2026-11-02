@@ -322,6 +322,18 @@
       })(required[q]);
     }
 
+    // A díjak blokk gombjai előre kiválasztják a szolgáltatást az űrlapon.
+    var serviceLinks = document.querySelectorAll("[data-service]");
+    for (var sl = 0; sl < serviceLinks.length; sl++) {
+      serviceLinks[sl].addEventListener("click", function () {
+        var wanted = this.getAttribute("data-service");
+        var radios = form.querySelectorAll("[name='szolgaltatas']");
+        for (var ri = 0; ri < radios.length; ri++) {
+          radios[ri].checked = radios[ri].value === wanted;
+        }
+      });
+    }
+
     var finish = function () {
       form.hidden = true;
       if (formDone) {
@@ -337,6 +349,7 @@
         "Név: " + (data.get("nev") || ""),
         "E-mail: " + (data.get("email") || ""),
         "Telefon: " + (data.get("telefon") || "—"),
+        "Szolgáltatás: " + (data.get("szolgaltatas") || "—"),
         "Téma: " + (data.getAll("tema").join(", ") || "—"),
         "Időpont: " + (data.getAll("idopont").join(", ") || "—"),
         "",

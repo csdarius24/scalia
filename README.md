@@ -58,6 +58,7 @@ Kézi deployhoz: `npx vercel --prod`
 | 07 | Szemlélet | teljes szélességű sötét sáv, egy mondat |
 | 08 | Vélemények | tipográfiai idézetek, kártya nélkül |
 | 09 | Mit / mit nem | kétoszlopos szedés |
+| 09b | Díjak | Rapid Segítség + Fullextrás csomag, lemondási feltétel |
 | 10 | Gyakori kérdések | Nebbia sáv, natív `<details>` harmonika |
 | 11 | Első beszélgetés | az oldal egyetlen panelje |
 | 12 | Időpontfoglalás | nagy tipográfiai blokk |
@@ -98,10 +99,9 @@ A cserélendő helyeket az oldalon **szaggatottan aláhúzott, sárgaréz szín�
 |---|---|
 | Két hangulatkép letöltése a repóba (lásd fent) | `index.html` `<img>` blokkok |
 | A coach neve (csak ha szeretné) | `index.html` — `.prose` első bekezdése |
-| Bemutatkozó szöveg (2 bekezdés) | `index.html` — `.prose` |
+| Végleges logó | `index.html` — `.hero__logo`; most ideiglenes jel |
 | Szakmai háttér | `index.html` — `.credentials` |
 | **Vélemények** | `index.html` — `#velemenyek`; jelenleg mintaszöveg |
-| Óradíj | `index.html` — GYIK első kérdése |
 | E-mail, telefon, Facebook URL | `index.html`, jogi oldalak |
 | Cal.com esemény útvonala | `index.html` — `#calEmbed` `data-cal-link` attribútuma (lásd lent) |
 | Adatvédelmi és impresszum szövegek | `adatvedelem.html`, `impresszum.html` |
@@ -112,8 +112,8 @@ A cserélendő helyeket az oldalon **szaggatottan aláhúzott, sárgaréz szín�
 > közzétenni fogyasztóvédelmi jogszabályba ütközik. A szekcióban erre
 > figyelmeztető szöveg is van — azt is töröld, amikor bekerülnek a valódiak.
 
-> Az asset-hivatkozásokon `?v=5` verziószám van. **Minden CSS/JS módosítás után
-> növeld meg** (`?v=6`), különben a visszatérő látogató egy órán át a régi
+> Az asset-hivatkozásokon `?v=6` verziószám van. **Minden CSS/JS módosítás után
+> növeld meg** (`?v=7`), különben a visszatérő látogató egy órán át a régi
 > fájlt kapja a Vercel cache-éből.
 
 ---
@@ -179,7 +179,7 @@ Helyi előnézet Python nélkül: `powershell -File .claude/serve.ps1` → `http
 ## Kapcsolatfelvételi űrlap
 
 A `#foglalas` szekció alján (`#uzenet`). Mezők: név*, e-mail*, telefon, témák
-(több is jelölhető), időpont-preferencia (délelőtt / délután / este / hétvégén), szabad szöveg,
+(több is jelölhető), szolgáltatás (ismerkedő / Rapid Segítség), időpont-preferencia (délelőtt / délután / este), szabad szöveg,
 adatkezelési hozzájárulás*. Magyar nyelvű, mezőnkénti hibaüzenetek; spamcsapda (`_gotcha`).
 
 **Küldés:** a `#contactForm` `action` attribútuma dönt.
